@@ -7,10 +7,18 @@ BillingItems
 const InventoryProviders=()=>{
 
     const [invItem,setInvItem]=useState([])
-    const [amttotal,setamttotal]=useState('')
-    const [updatTotal,setUpdatTotal]=useState('')
-console.log(invItem);
-console.log( typeof updatTotal,'amount total');
+    
+    
+    
+    const [total, setTotal] = useState(0)
+    // console.log(total);
+    
+    
+
+    
+    
+    
+    
 
 
 
@@ -23,33 +31,40 @@ console.log( typeof updatTotal,'amount total');
         
             
           }
-          function gettotalamount(amt){
-            setamttotal(amt)
-            
+         
+        //   const deleteTodo = (id) => {
+        //     setTodos((prev) => prev.filter((todo) => todo.id !== id))
+        //   }
+    
 
+          function updatTotal(updateTotalAmt){
+            setTotal(updateTotalAmt)
           }
-          function addUpdateDAmount(amtt){
-            setUpdatTotal(amtt)
-            
-          }
-
+          const deleteInv = (id) => {
+            setInvItem((prev) => prev.filter((item) => item.id !== id));
+            const deletedItem = invItem.find((item) => item.id === id);
+            if (deletedItem) {
+              setTotal((prevTotal) => prevTotal - deletedItem.total);
+            }
+          };
+        
+          
+          
     return(
-        <InventoryProvider value={{ invItem,setInvItem,addInvetory ,updateInv,gettotalamount,amttotal,setamttotal,addUpdateDAmount,updatTotal}}>
-        <Billing></Billing>
-       
-       
+        <InventoryProvider value={{ invItem,setInvItem,addInvetory ,updateInv,total, setTotal,
+            updatTotal,deleteInv
             
+        }}>
 
-        {invItem.map((inv)=>(
-                <div key={inv.id}>
+        <Billing></Billing>
 
-                    <BillingItems inv={inv}></BillingItems>
-
-                </div>
-            ))}
-
-        
-        
+            
+            
+        {invItem.map((inv) => (
+          <div key={inv.id}>
+            <BillingItems inv={inv} />
+          </div>
+))}
         </InventoryProvider>
     )
 

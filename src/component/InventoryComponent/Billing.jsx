@@ -2,61 +2,36 @@
 import { useState, useEffect } from "react";
 import { invUsecontext } from "../../context/InvContext";
 export default function Billing() {
-    const [inp, setInp] = useState('');
-    const [amount, setAmount] = useState('');
+    const { addInvetory,total, setTotal}=invUsecontext()
+    const [inp, setInp] = useState("");
+    const [price, setPrice] = useState(0);
     const [item, setItem] = useState(0);
-    const [result, setResult] = useState('');
-    const [total, setTotal] = useState(0);
-const { invItem,setInvItem,addInvetory,amttotal, gettotalamount,updatTotal}=invUsecontext()
-console.log( typeof total ,'total');
-console.log(typeof result ,'result');
+    const [result, setResult] = useState(0);
+    
+    
+    
+    
+    
+    
+
+
+
+
 
 
     
     useEffect(() => {
-        const multipliedValue = parseFloat(amount) * parseFloat(item);
+        const multipliedValue = parseFloat(price) * parseFloat(item);
         setResult(isNaN(multipliedValue) ? 0 : multipliedValue); 
-    }, [amount, item]);
+    }, [price, item]);
 
-    // useEffect(()=>{
-    //     setTotal(updatTotal)
-    // },[updatTotal])
-
+    
 
     function handleSubmit() {
-        // Add current result to the total
-        setTotal(prevTotal => prevTotal  + result );
-
-        
-
-
-
-        // if(amttotal !==""){
-        //     // setTotal((pre)=>pre+amttotal)
-        //     console.log("totoal");
-            
-        // gettotalamount(parseFloat(total))
-        // }
-
-        // if(amttotal ==''){
-        //     setTotal((pre)=> pre+result)
-
-        // }else{
-        //     setTotal((pre)=> pre+amttotal)
-
-        // }
-        // setTotal((pre)=>{
-        //     if(amttotal ==" "){
-        //         return pre+result
-        //     }else{
-        //         return pre+result+amttotal
-        //     }
-
-        // })
-
-        addInvetory({id:Date.now(),itemName:inp,price:amount,qut:item,total:result})
+ setTotal(prevTotal => prevTotal  + result );
+        addInvetory({id:Date.now(),itemName:inp,price:price,qut:item,total:result})
         setInp('');
-        setAmount(0);
+        setPrice(0);
         setItem(0);
         setResult(0);
     }
@@ -92,8 +67,9 @@ console.log(typeof result ,'result');
                         <input
                             type="number"
                             min="1"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            
+                            value={price} 
+                            onChange={(e) => setPrice(e.target.value)}
                             className="px-4 py-2 border-2 border-indigo-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg w-full max-w-xs placeholder-gray-400"
                         />
                     </div>
